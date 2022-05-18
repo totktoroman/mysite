@@ -1,0 +1,60 @@
+body {
+    background: #fff;
+}
+aside {
+    float:left;
+    background: #0088cc;
+    width: 12%;
+    padding: 1%;
+    height: 100vh;
+    color: #fff
+    border-right: 5px solid #0094cc;
+}
+aside .navigation{
+    font-size:125%;
+    margin-left: 10%;
+    font-weight: bold;
+    margin-top: 35%;
+}
+
+aside p{
+    font-size:125%;
+    font-weight: bold;
+    color: black;
+    display: block;
+    margin-top: 20px;
+    transition: transform .4s ease;
+
+}
+aside p:hover{
+    color: #fff;
+    text-decoration: none;
+    transform: scale(1.05);
+
+}
+
+aside ul{
+    list-style: none;
+
+}
+aside ul li{
+    color: black;
+    display: block;
+    margin-top: 20px;
+    transition: transform .4s ease;
+}
+aside ul li:hover, aside ul a:hover{
+    color: #fff;
+    text-decoration: none;
+    transform: scale(1.05);
+
+}
+
+main .features {
+    float: left;
+    margin-top: 5%;
+    text-align: center;
+    width: 75%;
+}
+main .features h1 {font-size: 50px;}
+main .features p {max-width: 400px; margin: 20px auto;}

@@ -1,0 +1,21 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    {{ groups }}
+{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1>
+            {% for el in groups %}
+                {{el}}
+            {% endfor %}
+        </h1>
+
+        {% for el in students %}
+           <p> {{el.info}} </p>
+        {% endfor %}
+
+
+    </div>
+{% endblock %}

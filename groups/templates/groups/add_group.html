@@ -1,0 +1,16 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    Создание группы
+{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1>Создание группы</h1>
+        <form method="post">
+            <input type="text" placeholder="Номер группы" class="form-control"><br>
+            <input type="text" placeholder="Направление" class="form-control"><br>
+            <button class="btn btn-success type='submit' ">Добавить группу</button>
+        </form>
+    </div>
+{% endblock %}
