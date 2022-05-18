@@ -1,0 +1,14 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    Удаление группы
+{% endblock %}
+
+{% block content %}
+        <h1>Удаление группы</h1>
+        <form method="post">
+            {% csrf_token %}
+            <button type="btn-danger">Удалить группу?</button>
+        </form>
+
+{% endblock %}

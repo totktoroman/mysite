@@ -2,14 +2,15 @@ from django.db import models
 
 # Create your models here.
 group_choices = (
-            ('moais', 'Мат. обеспечение и администрирование информационных систем'),
-            ('prikinf', 'Прикладная информатика'),
-            ('compsience' , 'Прикладная математика и инофрматика'),
-            ('ped', 'Педагогическое образование с двумя профилями подготовки'),
+            ('МОАИС', 'Мат. обеспечение и администрирование информационных систем'),
+            ('ПИ', 'Прикладная информатика'),
+            ('ПМ', 'Прикладная математика и инофрматика'),
+            ('Пед. обр', 'Педагогическое образование с двумя профилями подготовки'),
+            ('Не студенческая группа', 'Не студенческиая группа'),
         )
 class Group(models.Model):
-    group_number = models.CharField('Номер группы', max_length=10)
-    group_title = models.CharField('Направление', max_length=250, choices=group_choices, default='moais')
+    group_number = models.CharField('Номер группы', max_length=10, unique=True)
+    group_title = models.CharField('Направление', max_length=250, choices=group_choices)
 
     def __str__(self):
         return self.group_title
@@ -21,7 +22,7 @@ class Group(models.Model):
 class Student(models.Model):
     student_surname = models.CharField('Фамилия', max_length=50)
     student_name = models.CharField('Имя', max_length=50)
-    group = models.ForeignKey('Group', on_delete=models.PROTECT, null=True)
+    group = models.ForeignKey('Group', on_delete=models.CASCADE)
     account_id = models.IntegerField('id аккаунта')
 
     def __str__(self):
