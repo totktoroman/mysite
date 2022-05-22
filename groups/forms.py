@@ -13,4 +13,5 @@ class AddGroupForm(forms.ModelForm):
             'group_number': forms.TextInput(attrs={'class': 'form-input'}),
 
 
+
         }

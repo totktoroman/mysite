@@ -5,10 +5,13 @@
 {% endblock %}
 
 {% block content %}
-        <h1>Удаление группы</h1>
+    <div class="features">
+        <h1>Вы действительно хотите удалить группу?</h1>
         <form method="post">
             {% csrf_token %}
-            <button type="btn-danger">Удалить группу?</button>
+            <button class="btn btn-danger" type="submit">Удалить</button>
+            <a href="{% url 'groups-detail' group.id %}" class="btn btn-info">Отменить</a>
         </form>
+    </div>
 
 {% endblock %}

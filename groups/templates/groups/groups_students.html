@@ -8,7 +8,9 @@
     <div class="features">
         <h1>
             {% for el in groups %}
-                {{el}}
+                {{ el.group_number }}: {{ el.group_title }}
+            <a href="{% url 'edit_group' el.id %}" class="btn btn-warning">Изменить</a>
+            <a href="{% url 'delete_group' el.id %}" class="btn btn-danger">Удалить</a>
             {% endfor %}
         </h1>
 

@@ -11,8 +11,6 @@
         </h1>
         {% for el in groups %}
         <a href="{% url 'groups-detail' el.id %}" class="text-decoration-none text-dark"> <h3>{{ el.group_number }}: {{ el.group_title }} </h3></a>
-        <a href="{% url 'delete_group'  %}" class="btn btn-danger">Удалить группу </a>
-        <a href="{% url 'edit_group' el.id %}" class="btn btn-warning">Редактировать группу</a>
         {% endfor %}
     </div>
 {% endblock %}

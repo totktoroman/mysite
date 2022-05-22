@@ -14,10 +14,13 @@ class Group(models.Model):
 
     def __str__(self):
         return self.group_title
+    def get_absolute_url(self):
+        return f'/groups/{self.id}'
 
     class Meta:
         verbose_name = 'Группа'
         verbose_name_plural = 'Группы'
+
 
 class Student(models.Model):
     student_surname = models.CharField('Фамилия', max_length=50)
@@ -30,6 +33,7 @@ class Student(models.Model):
 
     def info(self):
         return 'Фамилия: ' +self.student_surname +'Имя: '+ self.student_name + ' Аккаунт: '+ str(self.account_id)
+
 
     class Meta:
         verbose_name = 'Студент'
