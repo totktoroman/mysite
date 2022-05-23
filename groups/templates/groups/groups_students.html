@@ -1,7 +1,7 @@
 {% extends 'main/layout.html' %}
 
 {% block title %}
-    {{ groups }}
+    {% for el in groups %} {{el.group_number }} : {{ el.group_title }}  {% endfor %}
 {% endblock %}
 
 {% block content %}
@@ -11,11 +11,18 @@
                 {{ el.group_number }}: {{ el.group_title }}
             <a href="{% url 'edit_group' el.id %}" class="btn btn-warning">Изменить</a>
             <a href="{% url 'delete_group' el.id %}" class="btn btn-danger">Удалить</a>
-            {% endfor %}
-        </h1>
 
+        </h1>
+        <h3>
+            Студенты: <a href="{% url 'add_student' el.id  %}" class="btn btn-success">Добавить студента</a>
+        </h3>
+        {% endfor %}
         {% for el in students %}
-           <p> {{el.info}} </p>
+            <h3>
+                {{el.info}}
+                <a href="{% url 'edit_student' el.id %}" class="btn btn-warning">Редактировать</a>
+                <a href="{% url 'delete_student' el.id  %}" class="btn btn-danger">Удалить</a>
+            </h3>
         {% endfor %}
 
 

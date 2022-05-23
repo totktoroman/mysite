@@ -6,11 +6,12 @@ group_choices = (
             ('ПИ', 'Прикладная информатика'),
             ('ПМ', 'Прикладная математика и инофрматика'),
             ('Пед. обр', 'Педагогическое образование с двумя профилями подготовки'),
-            ('Не студенческая группа', 'Не студенческиая группа'),
+            ('Не студенческая группа', 'Не студенческая группа'),
         )
 class Group(models.Model):
     group_number = models.CharField('Номер группы', max_length=10, unique=True)
     group_title = models.CharField('Направление', max_length=250, choices=group_choices)
+
 
     def __str__(self):
         return self.group_title
@@ -25,14 +26,17 @@ class Group(models.Model):
 class Student(models.Model):
     student_surname = models.CharField('Фамилия', max_length=50)
     student_name = models.CharField('Имя', max_length=50)
-    group = models.ForeignKey('Group', on_delete=models.CASCADE)
-    account_id = models.IntegerField('id аккаунта')
+    group = models.ForeignKey('Group', null=True, on_delete=models.CASCADE)
+    account_id = models.IntegerField('id аккаунта', unique=True)
+
+    def get_absolute_url(Self):
+        return f'/groups/{Self.group_id}/'
 
     def __str__(self):
         return self.student_surname +' '+ self.student_name
 
     def info(self):
-        return 'Фамилия: ' +self.student_surname +'Имя: '+ self.student_name + ' Аккаунт: '+ str(self.account_id)
+        return self.student_surname +' '+ self.student_name + ' Аккаунт: '+ str(self.account_id)
 
 
     class Meta:

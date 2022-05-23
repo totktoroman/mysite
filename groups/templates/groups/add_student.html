@@ -1,19 +1,19 @@
 {% extends 'main/layout.html' %}
 
 {% block title %}
-    Создание группы
+    Добавление нового студента
 {% endblock %}
 
 {% block content %}
     <div class="features">
-        <h1>Создание группы</h1>
-        <form action="{% url 'add_group' %}" method="post">
+        <h1>Добавление нового студента</h1>
+        <form  method="post" >
             {% csrf_token %}
             {% for f in form %}
                 {{ f }} <br>
                 <div class="form-error">{{ f.errors }} </div>
             {% endfor %}
-
+            <input type="hidden" id="id_group" name="group" value="{{group_id}}">
             <button class="btn btn-success" type="submit">Добавить</button>
         </form>
     </div>

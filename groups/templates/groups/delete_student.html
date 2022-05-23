@@ -1,0 +1,17 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    Удаление студента
+{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <form method="post">
+            {% csrf_token %}
+            <h1>Вы действительно хотите удалить {{ student.student_surname }} {{ student.student_name }} ?</h1>
+            <button class="btn btn-danger" type="submit" >Удалить</button>
+            <a href="{% url 'groups-detail' student.group.id %}" class="btn btn-info">Отменить</a>
+        </form>
+    </div>
+
+{% endblock %}
