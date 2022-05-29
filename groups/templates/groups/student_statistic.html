@@ -1,0 +1,29 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    Статистика: {{student.student_surname}} {{student.student_name}}
+{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1>
+            Статистика: {{student.student_surname}} {{student.student_name}}
+
+        </h1>
+
+        <h3>
+            Решенные задачи:
+        </h3>
+            {% for item in complete_tasks %}
+                {{item}}
+            {% endfor %}
+        <h3>
+            Нерешенные задачи:
+        </h3>
+            {% for item in failed_tasks %}
+                {{item}}
+            {% endfor %}
+
+
+    </div>
+{% endblock %}

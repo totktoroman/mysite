@@ -19,7 +19,9 @@
         {% endfor %}
         {% for el in students %}
             <h3>
-                {{el.info}}
+                <a href="{% url 'student_statistic' el.id %}" class="text-decoration-none text-dark">
+                    {{el.info}}
+                </a>
                 <a href="{% url 'edit_student' el.id %}" class="btn btn-warning">Редактировать</a>
                 <a href="{% url 'delete_student' el.id  %}" class="btn btn-danger">Удалить</a>
             </h3>

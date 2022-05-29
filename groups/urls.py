@@ -2,7 +2,6 @@ from django.template.defaulttags import url
 from django.urls import path
 from . import views
 
-
 urlpatterns = [
     path('', views.groups_home, name='groups_home'),
     path('<int:pk>/', views.selected_group, name='groups-detail'),
@@ -13,4 +12,8 @@ urlpatterns = [
     path('<int:pk>/add_student', views.add_student, name='add_student'),
     path('student-<int:pk>/edit_student', views.edit_student.as_view(), name='edit_student'),
     path('student-<int:pk>/delete_student', views.delete_student.as_view(), name='delete_student'),
+
+    path('student-<int:pk>/statistic', views.student_statistic, name='student_statistic'),
+
+    path('add_task', views.add_task, name='add_task'),
 ]
