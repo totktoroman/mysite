@@ -1,0 +1,18 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    Поборки задач
+{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h3> Подборки задач:
+            <a href="{% url 'add_task'  %}" class="btn btn-success">Добавить поборку</a>
+        </h3>
+        {% for el in task %}
+            <p>{{ el.theme }}: {{ el.task_list }} </p>
+            <a href="{% url 'edit_task' el.id %}" class="btn btn-warning">Изменить</a>
+            <a href="{% url 'delete_task' el.id %}" class="btn btn-danger">Удалить</a>
+        {% endfor %}
+    </div>
+{% endblock %}

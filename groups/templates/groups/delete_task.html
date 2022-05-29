@@ -1,0 +1,17 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    Удаление подборки задач
+{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1>Вы действительно хотите удалить подборку?</h1>
+        <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">Удалить</button>
+            <a href="{% url 'task_home'  %}" class="btn btn-info">Отменить</a>
+        </form>
+    </div>
+
+{% endblock %}

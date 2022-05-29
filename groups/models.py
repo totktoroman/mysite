@@ -54,6 +54,9 @@ class TaskAcmp(models.Model):
     level=models.CharField(max_length=2, choices=level_choices, default=BEGINNER)
     task_list=models.TextField(null=True)#Список задач
 
+    def get_absolute_url(self):
+        return '/groups/task_home'
+
     def __str__(self):
         return self.theme+' ('+self.level+')'
     #статический метод получения полного списка задач

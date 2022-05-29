@@ -45,19 +45,23 @@ class AddStudentForm(forms.ModelForm):
 
 class AddTaskForm(forms.ModelForm):
     class Meta:
-        model = Group
-        fields = ['group_number', 'group_title',]
+        model = TaskAcmp
+        fields = ['theme', 'level', 'task_list']
         widgets = {
-            'group_number': forms.TextInput(attrs={
+            'theme': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Номер группы'
+                'placeholder': 'Тематика'
             }),
-            'group_title': forms.Select(attrs={
+            'level': forms.Select(attrs={
                 'class': 'form-select',
+            }),
+            'task_list': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Тематика',
             }),
 
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['group_title'].empty_value = "Категория не выбрана"
+        self.fields['level'].empty_value = "Категория не выбрана"

@@ -68,15 +68,30 @@ class delete_student(DeleteView):
     def get_success_url(self):
         return reverse_lazy('groups-detail', kwargs={'pk': self.object.group.id})
 
+def task_home(request):
+    task = TaskAcmp.objects.all()
+    return render(request, 'groups/task_home.html', {'task': task})
+
 def add_task(request):
     if request.method == 'POST':
-        form = AddGroupForm(request.POST)
+        form = AddTaskForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('groups_home')
+            return redirect('task_home')
     else:
-        form = AddGroupForm()
-    return render(request, 'groups/add_group.html', {'form': form, 'title': 'Создание группы'})
+        form = AddTaskForm()
+    return render(request, 'groups/add_task.html', {'form': form, 'title': 'Добавление новых задач'})
+
+class edit_task(UpdateView):
+    model = TaskAcmp
+    template_name = 'groups/edit_task.html'
+    form_class = AddTaskForm
+
+class delete_task(DeleteView):
+    model = TaskAcmp
+    success_url = '/groups/task_home'
+    template_name = 'groups/delete_task.html'
+
 
 
 def student_statistic(request, pk):
