@@ -57,7 +57,7 @@ class AddTaskForm(forms.ModelForm):
             }),
             'task_list': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Тематика',
+                'placeholder': 'Номера задач    например:1, 2, 3, 4',
             }),
 
         }

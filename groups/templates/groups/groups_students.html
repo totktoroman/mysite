@@ -5,26 +5,47 @@
 {% endblock %}
 
 {% block content %}
-    <div class="features">
-        <h1>
-            {% for el in groups %}
-                {{ el.group_number }}: {{ el.group_title }}
-            <a href="{% url 'edit_group' el.id %}" class="btn btn-warning">Изменить</a>
-            <a href="{% url 'delete_group' el.id %}" class="btn btn-danger">Удалить</a>
+    <div style = "text-align:center">
 
-        </h1>
-        <h3>
-            Студенты: <a href="{% url 'add_student' el.id  %}" class="btn btn-success">Добавить студента</a>
-        </h3>
-        {% endfor %}
-        {% for el in students %}
-            <h3>
-                <a href="{% url 'student_statistic' el.id %}" class="text-decoration-none text-dark">
-                    {{el.info}}
-                </a>
-                <a href="{% url 'edit_student' el.id %}" class="btn btn-warning">Редактировать</a>
-                <a href="{% url 'delete_student' el.id  %}" class="btn btn-danger">Удалить</a>
-            </h3>
+            <h4>
+                {% for el1 in groups %}
+                    {{ el1.group_number }}: {{ el1.group_title }}
+
+            </h4>
+
+
+            <table class="table table-dark">
+                <tr>
+                    <th>ФИО</th>
+                    <th>Аккаунт</th>
+                    <th>Операции</th>
+                </tr>
+                <tr>
+                    {% for el in students %}
+
+                    <td>
+                        <a href="{% url 'student_statistic' el.id %}" class="text-decoration-none">
+                                {{el.fio}}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'student_statistic' el.id %}" class="text-decoration-none">
+                                {{el.acmp_id}}
+                        </a>
+                    </td>
+                    <td>
+                            <a href="{% url 'edit_student' el.id %}" class="btn btn-warning">Редактировать</a>
+                            <a href="{% url 'delete_student' el.id  %}" class="btn btn-danger">Удалить</a>
+                    </td>
+
+            </tr>
+                    {% endfor %}
+                <tr><td> <a href="{% url 'add_student' el1.id  %}" class="btn btn-success">Добавить</a></td>
+                    <td></td>
+                    <td><a href="{% url 'update_parse' el1.id  %}" class="btn btn-info">Обновить таблицу</a></td>
+                </tr>
+
+            </table>
         {% endfor %}
 
 

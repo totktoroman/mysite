@@ -6,23 +6,46 @@
 
 {% block content %}
     <div class="features">
+
         <h1>
             Статистика: {{student.student_surname}} {{student.student_name}}
 
         </h1>
+            <h4 style="text-align:left"> Решенные задачи: </h4>
+        <p style="color:green">
+            {{student_tasks}}
+        </p>
+        <table class = "table table-dark">
+            <tr>
+                <th>Тематика</th>
+                <th>Список задач по теме</th>
+                <th>Нерешенные задачи:</th>
+                <th>Процент выполнения</th>
+            </tr>
 
-        <h3>
-            Решенные задачи:
-        </h3>
-            {% for item in complete_tasks %}
-                {{item}}
-            {% endfor %}
-        <h3>
-            Нерешенные задачи:
-        </h3>
-            {% for item in failed_tasks %}
-                {{item}}
-            {% endfor %}
+
+                {% for item in statistics %}
+            <tr>
+                <td>{{item.model}}</td>
+                <td>{{item.themeTasks}}</td>
+                {% if not item.toSolveTheme %}
+                    <td>Нет нерешенных</td>
+                {% else %}
+                    <td style="color:red">{{item.toSolveTheme}}</td>
+                {% endif %}
+                <td>{{item.percent}}</td>
+            </tr>
+
+
+                {% endfor %}
+
+        </table>
+        <div>
+            <h2 style="text-align:left">Анализ решения задач:</h2>
+            <p>all ok</p>
+
+        </div>
+
 
 
     </div>

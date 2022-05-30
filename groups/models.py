@@ -34,24 +34,32 @@ class Student(models.Model):
     def __str__(self):
         return self.student_surname +' '+ self.student_name
 
-    def info(self):
-        return self.student_surname +' '+ self.student_name + ' Аккаунт: '+ str(self.account_id)
+    def fio(self):
+        return self.student_surname +' '+ self.student_name
+
+    def acmp_id(self):
+        return str(self.account_id)
+
+    def get_tasks(self):
+        result = []
+        result = result+[x for x in self.student_solved_acmp_base.split(',')]
+        return result
 
     class Meta:
         verbose_name = 'Студент'
         verbose_name_plural = 'Студенты'
 
 class TaskAcmp(models.Model):
-    BEGINNER = 'BE'
-    MEDIUM = 'ME'
-    HARD = 'HA'
+    # BEGINNER = 'BE'
+    # MEDIUM = 'ME'
+    # HARD = 'HA'
     level_choices = (
-        (BEGINNER, 'Для начинающих'),
-        (MEDIUM, 'Средний'),
-        (HARD, 'Сложный')
+        ('Для начинающих', 'Для начинающих'),
+        ('Средний', 'Средний'),
+        ('Сложный', 'Сложный')
     )
     theme=models.CharField(max_length=50)
-    level=models.CharField(max_length=2, choices=level_choices, default=BEGINNER)
+    level=models.CharField(max_length=15, choices=level_choices, default='BEGINNER')
     task_list=models.TextField(null=True)#Список задач
 
     def get_absolute_url(self):
@@ -65,5 +73,11 @@ class TaskAcmp(models.Model):
         tasks=TaskAcmp.objects.all()
         result=[]
         for task in tasks:
-            result=result+[int (x) for x in task.task_list.split(',')]
+            result=result+[int(x) for x in task.task_list.split(',')]
         return result
+
+    def getTasks(self):
+        result=[]
+        result=result+[int(x) for x in self.task_list.split(',')]
+        return result
+

@@ -8,19 +8,59 @@ from django.views.generic import DeleteView, UpdateView, DetailView
 import requests
 from bs4 import BeautifulSoup
 
+
 # Create your views here.
 def groups_home(request):
     groups = Group.objects.all()
     return render(request, 'groups/groups_home.html', {'groups': groups})
 
+
 def selected_group(request, pk):
     students = Student.objects.filter(group_id=pk)
     groups = Group.objects.filter(id=pk)
+    for el in students:
+        url = f'https://acmp.ru/index.asp?main=user&id={el.account_id}'
+        page = requests.get(url)
+        soup = BeautifulSoup(page.text, 'lxml')
+        cp = soup.findAll("p")
+        complete_tasks = cp[1].findAll('a')
+        complete_tasks_numbers = ""
+        for item in complete_tasks:
+            complete_tasks_numbers += item.text+','
+        complete_tasks_numbers = complete_tasks_numbers[:-1]
+        el.student_solved_acmp_base = complete_tasks_numbers
+        el.save()
+
+
     context = {
         'students': students,
         'groups': groups,
     }
     return render(request, 'groups/groups_students.html', context=context)
+
+
+def update_parse(request, pk):
+    students = Student.objects.filter(group_id=pk)
+    groups = Group.objects.filter(id=pk)
+    for el in students:
+        url = f'https://acmp.ru/index.asp?main=user&id={el.account_id}'
+        page = requests.get(url)
+        soup = BeautifulSoup(page.text, 'lxml')
+        cp = soup.findAll("p")
+        complete_tasks = cp[1].findAll('a')
+        complete_tasks_numbers = []
+        for item in complete_tasks:
+            complete_tasks_numbers.append(item.text)
+        complete_tasks_numbers = complete_tasks_numbers[:-1]
+        el.student_solved_acmp_base = complete_tasks_numbers
+        el.save()
+
+    context = {
+        'students': students,
+        'groups': groups,
+    }
+    return render(request, 'groups/groups_students.html', context=context)
+
 
 def add_group(request):
     if request.method == 'POST':
@@ -96,24 +136,42 @@ class delete_task(DeleteView):
 
 def student_statistic(request, pk):
     student = Student.objects.get(id=pk)
-    url = f'https://acmp.ru/index.asp?main=user&id={student.account_id}'
-    page = requests.get(url)
-    soup = BeautifulSoup(page.text, 'lxml')
-    cp = soup.findAll("p")
-    complete_tasks = cp[1].findAll('a')
-    failed_tasks = cp[2].findAll('a')
+    themes = TaskAcmp.objects.all()
+    success_tasks = {}
+    failed_tasks = {}
+    student_tasks = student.get_tasks()
 
-    complete_tasks_numbers=[]
-    for item in complete_tasks:
-        complete_tasks_numbers.append(item.text)
 
-    failed_tasks_numbers = []
-    for item in failed_tasks:
-        failed_tasks_numbers.append(item.text)
+    statistics = []
 
+    solved_student = [int(x) for x in student.student_solved_acmp_base.split(',')]
+
+    for task in themes:
+        themeTasks = [int(x) for x in task.task_list.split(',')]
+
+        toSolveTheme = []
+        for i in themeTasks:
+            if i not in solved_student:
+                toSolveTheme.append(i)
+
+
+        toSolveTheme = [x for x in toSolveTheme]
+        percent = round(100 * (1 - len(toSolveTheme) / len(themeTasks)), 1)
+        statistics.append({'model': task, 'toSolveTheme': toSolveTheme, 'percent': percent, 'themeTasks' :  themeTasks})
+
+    # for el in themes:
+    #     result = el.getTasks()
+    #     success_tasks[el.pk] = []
+    #     failed_tasks[el.pk] = []
+    #     for i in result:
+    #         if i in student_tasks:
+    #             success_tasks['el.pk'].append(i)
+    #         else:
+    #             failed_tasks[el.pk].append(i)
     context = {
         'student': student,
-        'complete_tasks': complete_tasks_numbers,
-        'failed_tasks': failed_tasks_numbers,
+        'statistics': statistics,
+        'themes': themes,
+        'student_tasks': solved_student
     }
     return render(request, 'groups/student_statistic.html', context=context)
